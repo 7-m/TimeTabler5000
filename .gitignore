@@ -1,0 +1,10 @@
+
+
+**/target/
+.idea/
+TimeTabler5000.iml
+**/out/
+**/gradle
+**/.gradle
+**/build/
+

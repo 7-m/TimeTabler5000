@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mfd.timetable5k.gui.configstage.TeacherChooserController">
+    <HBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+        <VBox>
+            <Label text="Classrooms"/>
+            <ListView fx:id="classList"/>
+        </VBox>
+        <VBox>
+            <Label text="Opted Subjects"/>
+            <ListView fx:id="subjectList"/>
+        </VBox>
+        <VBox spacing="5.0">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <Label text="Selected Teacher"/>
+            <Label fx:id="selectedTeacher"/>
+            <Button mnemonicParsing="false" onAction="#onClickSelectTeacher" text="Select Teacher"/>
+            <Button mnemonicParsing="false" onAction="#onClickDeleteTeachers" text="Delete Teacher"/>
+        </VBox>
+        <VBox>
+            <Label text="Available Teachers"/>
+            <ListView fx:id="availableTeacherList"/>
+        </VBox>
+    </HBox>
+</AnchorPane>

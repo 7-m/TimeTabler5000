@@ -1,0 +1,56 @@
+#title-label{
+    -fx-font: normal bold 40 Western;
+    -fx-underline: true;
+
+}
+
+
+#class-label{
+    -fx-font: normal lighter 18 Western;
+    -fx-underline: true;
+    -fx-padding: 15 15 15 15;
+
+}
+
+
+.period-label{
+
+    -fx-border-color: rgb(49, 89, 23);
+    -fx-border-radius: 0;
+    -fx-padding: 15 15 15 15;
+    -fx-pref-width: 140px;
+    -fx-pref-height: 80px;
+    -fx-text-alignment: center;
+}
+
+
+.lab-period-label{
+    -fx-background-color: rgb(128, 128, 128);
+}
+
+.elective-period-label{
+    -fx-background-color: rgb(255, 165, 0);
+}
+
+.day-label{
+    -fx-font: normal bold 15 Western;
+    -fx-rotate: -45;
+    -fx-text-alignment: center;
+
+}
+
+
+.period-num-label{
+
+    -fx-text-alignment: center;
+    -fx-font: italic bold 15 Western;
+
+}
+
+
+.teacher-label{
+     -fx-font: normal lighter 13 Courier;
+     -fx-pref-width: 240px;
+     -fx-pref-height: 40px;
+}
+

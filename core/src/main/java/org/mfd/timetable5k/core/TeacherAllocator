@@ -1,0 +1,101 @@
+package org.mfd.timetable5k.core;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
+
+public class TeacherAllocator {
+
+
+	BlockingQueue<Classroom[]> resultQueue = new ArrayBlockingQueue<>(1);
+	private Classroom[] classrooms;
+	private int numClass;
+	private boolean goahead; //to protet against spurious wake ups
+	private Thread teacherAllocatorThread = new Thread(() -> {
+		try {
+			assignNextTeacher(0, 0);
+		} catch (InterruptedException e) {
+			System.out.println("Teacher allocator thread stopped");
+			return;
+		}
+	},"TeacherAllocator-Thread");
+
+	public TeacherAllocator(Classroom[] classrooms) {
+		this.classrooms = classrooms;
+		numClass = classrooms.length;
+
+
+	}
+
+	private void assignNextTeacher(int i, int j) throws InterruptedException {
+		if(Thread.interrupted())
+			throw new InterruptedException();
+
+		// i iterates over classes and j iterates over subjects of each class
+		if (j == classrooms[i].getSubjectsToTeach().size()) {
+			j = 0; //reset counter for next classes subjects
+			i++; // move to next class
+		}
+
+		//after iterating over all classes
+		if (i == numClass) {
+			// do something with the solution
+			resultQueue.add(classrooms);
+			synchronized (this) {
+				goahead = false;//not good to go, for spurious wake ups
+
+				while (!goahead)
+					wait();
+			}
+
+			return;
+		}
+
+		//shuffle it up
+		Subject subject = classrooms[i].getSubjectsToTeach().get(j);
+		List<Teacher> teachers = new ArrayList<>(subject.getTeachers());
+		Collections.shuffle(teachers);
+		for (Teacher t : teachers) {
+			// the only constraint we need to check at this stage is workUnits
+			if (t.canDoWorkFor(subject.getRequiredHours())) {
+
+				classrooms[i].assignTeacher(subject, t);
+				t.incWorkBy(subject.getRequiredHours());
+
+				assignNextTeacher(i, j + 1);// time to go deeper
+
+				//back tracking logic : remove the current teacher and go for another
+				classrooms[i].removeSubjectTeacher(subject);
+				t.decWorkBy(subject.getRequiredHours());
+			}
+		}
+
+	}
+
+	public void stopTeacherAllocator() {
+		teacherAllocatorThread.interrupt();
+
+
+	}
+
+	public Classroom[] getAllocation(long timeout, TimeUnit unit) {
+		Classroom[] result = null;
+		if (teacherAllocatorThread.isAlive())
+			synchronized (this) {
+				goahead = true;
+				notify();
+			}
+		else
+			teacherAllocatorThread.start();
+
+		try {
+			result = resultQueue.poll(timeout, unit);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+}

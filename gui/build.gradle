@@ -1,0 +1,10 @@
+apply plugin : 'java'
+
+apply plugin: 'application'
+
+mainClassName = 'org.mfd.timetable5k.TimeTablerApp'
+
+
+dependencies {
+    implementation project(":core")
+}

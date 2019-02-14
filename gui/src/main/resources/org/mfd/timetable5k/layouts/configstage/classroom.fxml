@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mfd.timetable5k.gui.configstage.ClassroomController">
+    <HBox>
+        <TableView fx:id="classroomTable">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Name" />
+            </columns>
+        </TableView>
+        <VBox alignment="TOP_CENTER" spacing="5.0">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            <HBox.margin>
+                <Insets />
+            </HBox.margin>
+            <TextField fx:id="nameField" promptText="name" />
+            <Button mnemonicParsing="false" onAction="#clickAddClassroomButton" text="Add" />
+            <Button mnemonicParsing="false" onAction="#clickDeleteClassroomButton" text="Delete" />
+        </VBox>
+        <TableView fx:id="wantedSubjectsTable">
+            <columns>
+                <TableColumn prefWidth="143.0" text="Wanted Subjects" />
+            </columns>
+        </TableView>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" spacing="5.0">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+         <TableView fx:id="availableSubjectTable" prefHeight="200.0" prefWidth="200.0">
+           <columns>
+             <TableColumn  prefWidth="155.0" text="Availaible subjects" />
+           </columns>
+         </TableView>
+
+            <Button mnemonicParsing="false" onAction="#clickAddSubjectButton" text="Add" />
+            <Button mnemonicParsing="false" onAction="#clickDeleteSubjectButton" text="Delete" />
+            <Button mnemonicParsing="false" onAction="#onClickAddAll" text="Add All Subjects" />
+        </VBox>
+    </HBox>
+</AnchorPane>
